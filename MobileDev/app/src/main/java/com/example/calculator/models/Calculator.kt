@@ -1,7 +1,7 @@
 package com.example.calculator.models
 
 import android.widget.TextView
-import com.example.calculator.MainActivity
+import com.example.calculator.activities.MainActivity
 import com.example.calculator.utils.CalculatorUtils.areParenthesesBalanced
 import net.objecthunter.exp4j.Expression
 import net.objecthunter.exp4j.ExpressionBuilder

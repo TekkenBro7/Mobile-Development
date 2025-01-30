@@ -1,5 +1,6 @@
-package com.example.calculator
+package com.example.calculator.activities
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
@@ -8,17 +9,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
+import com.example.calculator.R
 import com.example.calculator.models.Calculator
 import com.example.calculator.utils.ButtonHandlers
-import net.objecthunter.exp4j.ExpressionBuilder
-import net.objecthunter.exp4j.Expression
-import kotlin.math.exp
-import com.example.calculator.utils.CalculatorUtils
-import com.example.calculator.utils.CalculatorUtils.areParenthesesBalanced
 import com.example.calculator.utils.CalculatorUtils.toggleExtraColumn
 
 class MainActivity : AppCompatActivity() {
@@ -56,9 +51,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var calculator: Calculator
 
     private lateinit var buttons: List<Button>
+    private lateinit var levelButton: Button
 
     private val buttonColorDisabled = Color.GRAY
     private  val buttonColorEnabled = Color.parseColor("#EE7002")
+
+    companion object {
+        private const val REQUEST_ANGLE = 1
+        private const val REQUEST_QR_SCAN = 2
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +73,18 @@ class MainActivity : AppCompatActivity() {
         initViews()
         calculator = Calculator(expression, result, this)
         setupButtonListeners()
+
+
+        val qrButton: Button = findViewById(R.id.QrButton)
+        qrButton.setOnClickListener {
+            val intent = Intent(this, QrScannerActivity::class.java)
+            startActivity(intent)
+        }
+
     }
+
+
+
 
     fun setButtonsEnabled(enabled: Boolean) {
         val color = if (!enabled) buttonColorEnabled else buttonColorDisabled
@@ -131,6 +143,8 @@ class MainActivity : AppCompatActivity() {
             cos,
             sqrt
         )
+
+        levelButton = findViewById(R.id.levelButton)
     }
 
     private fun setupButtonListeners() {
@@ -160,6 +174,21 @@ class MainActivity : AppCompatActivity() {
         }
         toggleColumnButton.setOnClickListener {
             toggleExtraColumn(extraColumn)
+        }
+        levelButton.setOnClickListener {
+            val intent = Intent(this, LevelActivity::class.java)
+            startActivityForResult(intent, REQUEST_ANGLE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_ANGLE && resultCode == RESULT_OK) {
+            val functionResult = data?.getStringExtra("FUNCTION_RESULT")
+            val expressionText = expression.text.toString()
+            if (functionResult != null) {
+                expression.text = "${expressionText}$functionResult"
+            }
         }
     }
 }
