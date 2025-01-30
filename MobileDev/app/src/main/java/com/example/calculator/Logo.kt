@@ -10,11 +10,10 @@ class LogoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash)
-        // Задержка перед переходом на MainActivity
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish() // Закрывает текущую Activity
-        }, 3000)
+            finish()
+        }, 2000)
     }
 }
