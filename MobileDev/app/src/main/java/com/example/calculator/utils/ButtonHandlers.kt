@@ -19,6 +19,8 @@ object ButtonHandlers {
                 "0" -> calculator.zero()
                 "00" -> calculator.doubleZero()
                 "." -> calculator.dot()
+                "π" -> calculator.pi()
+                "e" -> calculator.e()
             }
         }
     }
@@ -44,6 +46,9 @@ object ButtonHandlers {
                 "sqrt" -> calculator.sqrt()
                 "(" -> calculator.leftscob()
                 ")" -> calculator.rightscob()
+                "tg" -> calculator.tg()
+                "ctg" -> calculator.ctg()
+                "ln" -> calculator.ln()
             }
         }
     }

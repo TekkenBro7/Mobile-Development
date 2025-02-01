@@ -44,9 +44,15 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var  sin: Button
     private  lateinit var  cos: Button
     private  lateinit var  sqrt: Button
+    private  lateinit var  e: Button
+    private  lateinit var  ln: Button
+    private  lateinit var  tg: Button
+    private  lateinit var  ctg: Button
+    private  lateinit var  pi: Button
 
     private  lateinit var toggleColumnButton: Button
     private lateinit var extraColumn: LinearLayout
+    private lateinit var extraColumn2: LinearLayout
 
     private lateinit var calculator: Calculator
 
@@ -74,17 +80,12 @@ class MainActivity : AppCompatActivity() {
         calculator = Calculator(expression, result, this)
         setupButtonListeners()
 
-
         val qrButton: Button = findViewById(R.id.QrButton)
         qrButton.setOnClickListener {
             val intent = Intent(this, QrScannerActivity::class.java)
             startActivity(intent)
         }
-
     }
-
-
-
 
     fun setButtonsEnabled(enabled: Boolean) {
         val color = if (!enabled) buttonColorEnabled else buttonColorDisabled
@@ -102,6 +103,7 @@ class MainActivity : AppCompatActivity() {
 
         toggleColumnButton = findViewById(R.id.toggleColumnButton)
         extraColumn = findViewById(R.id.extra_column)
+        extraColumn2 = findViewById(R.id.extra_column2)
 
         result = findViewById(R.id.result)
         clear = findViewById(R.id.clear)
@@ -129,6 +131,11 @@ class MainActivity : AppCompatActivity() {
         sin = findViewById(R.id.sin)
         cos = findViewById(R.id.cos)
         sqrt = findViewById(R.id.sqrt)
+        e = findViewById(R.id.e)
+        ln = findViewById(R.id.ln)
+        tg = findViewById(R.id.tg)
+        ctg = findViewById(R.id.ctg)
+        pi = findViewById(R.id.pi)
 
         buttons = listOf(
             backSpace,
@@ -141,7 +148,11 @@ class MainActivity : AppCompatActivity() {
             rightscob,
             sin,
             cos,
-            sqrt
+            sqrt,
+            e,
+            ln,
+            tg,
+            ctg
         )
 
         levelButton = findViewById(R.id.levelButton)
@@ -152,7 +163,8 @@ class MainActivity : AppCompatActivity() {
             R.id.zero to "0", R.id.doublezero to "00", R.id.one to "1",
             R.id.two to "2", R.id.three to "3", R.id.four to "4",
             R.id.five to "5", R.id.six to "6", R.id.seven to "7",
-            R.id.eight to "8", R.id.nine to "9", R.id.dot to "."
+            R.id.eight to "8", R.id.nine to "9", R.id.dot to ".",
+            R.id.pi to "π", R.id.e to "e"
         )
         val operations = mapOf(
             R.id.add to "+", R.id.subtract to "-", R.id.multiply to "*",
@@ -161,7 +173,8 @@ class MainActivity : AppCompatActivity() {
         val functions = mapOf(
             R.id.clear to "clear", R.id.backSpace to "backspace",
             R.id.sin to "sin", R.id.cos to "cos", R.id.sqrt to "sqrt",
-            R.id.leftscob to "(", R.id.rightscob to ")"
+            R.id.leftscob to "(", R.id.rightscob to ")", R.id.tg to "tg",
+            R.id.ctg to "ctg", R.id.ln to "ln"
         )
         buttons.forEach { (id, value) ->
             findViewById<Button>(id)?.let { ButtonHandlers.setNumberButtonListener(it, calculator, value) }
@@ -174,6 +187,7 @@ class MainActivity : AppCompatActivity() {
         }
         toggleColumnButton.setOnClickListener {
             toggleExtraColumn(extraColumn)
+            toggleExtraColumn(extraColumn2)
         }
         levelButton.setOnClickListener {
             val intent = Intent(this, LevelActivity::class.java)

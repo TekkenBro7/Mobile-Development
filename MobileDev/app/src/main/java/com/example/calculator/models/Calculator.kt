@@ -532,6 +532,115 @@ class Calculator(private val expression: TextView, private val result: TextView,
             }
         }
     }
+    fun tg() {
+        if (isCalculationComplete) {
+            expression.textSize = 60F
+            result.textSize = 30F
+            isCalculationComplete = false
+            str = "tan("
+            expressionText(str)
+            result.text = "=0"
+        } else {
+            if (expression.text.toString()
+                    .startsWith("0") && expression.text.toString().length <= 2 &&
+                expression.text.toString().getOrNull(1) != '.'
+            ) {
+                str = expression.text.toString().replace("0", "") + "tan("
+                expressionText(str)
+            } else {
+                str = expression.text.toString() + "tan("
+                expressionText(str)
+            }
+        }
+    }
+    fun ctg() {
+        if (isCalculationComplete) {
+            expression.textSize = 60F
+            result.textSize = 30F
+            isCalculationComplete = false
+            str = "cot("
+            expressionText(str)
+            result.text = "=0"
+        } else {
+            if (expression.text.toString()
+                    .startsWith("0") && expression.text.toString().length <= 2 &&
+                expression.text.toString().getOrNull(1) != '.'
+            ) {
+                str = expression.text.toString().replace("0", "") + "cot("
+                expressionText(str)
+            } else {
+                str = expression.text.toString() + "cot("
+                expressionText(str)
+            }
+        }
+    }
+    fun ln() {
+        if (isCalculationComplete) {
+            expression.textSize = 60F
+            result.textSize = 30F
+            isCalculationComplete = false
+            str = "log("
+            expressionText(str)
+            result.text = "=0"
+        } else {
+            if (expression.text.toString()
+                    .startsWith("0") && expression.text.toString().length <= 2 &&
+                expression.text.toString().getOrNull(1) != '.'
+            ) {
+                str = expression.text.toString().replace("0", "") + "log("
+                expressionText(str)
+            } else {
+                str = expression.text.toString() + "log("
+                expressionText(str)
+            }
+        }
+    }
+    fun pi() {
+        if (isCalculationComplete) {
+            expression.textSize = 60F
+            result.textSize = 30F
+            isCalculationComplete = false
+            str = "π"
+            expressionText(str)
+            resultText()
+        } else {
+            if (expression.text.toString()
+                    .startsWith("0") && expression.text.toString().length < 2 &&
+                expression.text.toString().getOrNull(1) != '.'
+            ) {
+                str = expression.text.toString().replace("0", "") + "π"
+                expressionText(str)
+                resultText()
+            } else {
+                str = expression.text.toString() + "π"
+                expressionText(str)
+                resultText()
+            }
+        }
+    }
+    fun e() {
+        if (isCalculationComplete) {
+            expression.textSize = 60F
+            result.textSize = 30F
+            isCalculationComplete = false
+            str = "e"
+            expressionText(str)
+            resultText()
+        } else {
+            if (expression.text.toString()
+                    .startsWith("0") && expression.text.toString().length < 2 &&
+                expression.text.toString().getOrNull(1) != '.'
+            ) {
+                str = expression.text.toString().replace("0", "") + "e"
+                expressionText(str)
+                resultText()
+            } else {
+                str = expression.text.toString() + "e"
+                expressionText(str)
+                resultText()
+            }
+        }
+    }
 
     private fun expressionText(str: String) {
         expression.text = str
@@ -542,8 +651,8 @@ class Calculator(private val expression: TextView, private val result: TextView,
             result.text = "Ошибка: несбалансированные скобки"
             return
         }
-        val exp: Expression = ExpressionBuilder(expressionText).build()
         try {
+            val exp: Expression = ExpressionBuilder(expressionText).build()
             val resultValue = exp.evaluate()
             if (resultValue.toString().endsWith(".0")) {
                 result.text = "=" + resultValue.toString().replace(".0", "")
