@@ -8,7 +8,7 @@ import kotlin.math.ceil
 class DialogHelper(private val context: Context) {
 
     fun showFunctionSelectionDialog(angle: Float, onFunctionSelected: (String) -> Unit) {
-        val functions = arrayOf("sin", "cos")
+        val functions = arrayOf("sin", "cos", "tan", "cot")
 
         AlertDialog.Builder(context)
             .setTitle("Выберите функцию")

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "311280763050",
+    "project_id": "mobilelab-914bc",
+    "storage_bucket": "mobilelab-914bc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311280763050:android:5377862ee990278234d0d3",
+        "android_client_info": {
+          "package_name": "com.example.calculator"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAW8fMX9Hyf8faDwYSHYh3_Xw6c4kkK6LE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

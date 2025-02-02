@@ -1,10 +1,12 @@
 package com.example.calculator.models
 
 import android.widget.TextView
+import com.example.calculator.Firebase.FireStoreCalc
 import com.example.calculator.activities.MainActivity
 import com.example.calculator.utils.CalculatorUtils.areParenthesesBalanced
 import net.objecthunter.exp4j.Expression
 import net.objecthunter.exp4j.ExpressionBuilder
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Calculator(private val expression: TextView, private val result: TextView,
                  private val activity: MainActivity
@@ -12,6 +14,7 @@ class Calculator(private val expression: TextView, private val result: TextView,
     private var isCalculationComplete = false
     private var hasLettersInResult = false
     private var str: String = ""
+
 
     fun one() {
         if (isCalculationComplete) {
@@ -398,6 +401,11 @@ class Calculator(private val expression: TextView, private val result: TextView,
         hasLettersInResult = resultText.any { it.isLetter() && it != 'e' && it != 'E' }
 
         activity.setButtonsEnabled(hasLettersInResult)
+
+        if (!hasLettersInResult && resultText.isNotBlank() && resultText != "Ошибка" && resultText != "=0") {
+            val firestore = FireStoreCalc(activity) 
+            firestore.saveCalculationToFirestore(expression.text.toString(), resultText)
+        }
     }
 
     fun clear() {

@@ -1,7 +1,7 @@
 [versions]
 agp = "8.8.0"
 cameraView = "1.4.1"
-kotlin = "1.9.24"
+kotlin = "2.1.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -17,6 +17,7 @@ playServicesMlkitTextRecognition = "19.0.1"
 firebaseFirestoreKtx = "25.1.1"
 firebaseCrashlyticsBuildtools = "3.0.2"
 zxingAndroidEmbedded = "4.3.0"
+firebaseFirestore = "25.1.1"
 
 [libraries]
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraView" }
@@ -38,6 +39,7 @@ play-services-mlkit-text-recognition = { module = "com.google.android.gms:play-s
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbedded" }
+firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

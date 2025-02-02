@@ -16,15 +16,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/toggleColumnButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_expand"
+            android:contentDescription="Расширить"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:textAllCaps="false"
             android:backgroundTint="@color/btn"
-            android:text="Расширить"
-            android:textColor="@color/white"
-            android:visibility="gone" />
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/history"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="История"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/btn"
+            android:textColor="@color/white"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/QrButton"

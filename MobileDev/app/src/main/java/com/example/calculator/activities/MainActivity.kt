@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -15,6 +16,7 @@ import com.example.calculator.R
 import com.example.calculator.models.Calculator
 import com.example.calculator.utils.ButtonHandlers
 import com.example.calculator.utils.CalculatorUtils.toggleExtraColumn
+import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var  expression: TextView
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     private  lateinit var  ctg: Button
     private  lateinit var  pi: Button
 
-    private  lateinit var toggleColumnButton: Button
+    private  lateinit var toggleColumnButton: ImageButton
     private lateinit var extraColumn: LinearLayout
     private lateinit var extraColumn2: LinearLayout
 
@@ -58,19 +60,23 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var buttons: List<Button>
     private lateinit var levelButton: Button
+    private lateinit var historyButton: Button
+    private lateinit var qrButton: Button
+
 
     private val buttonColorDisabled = Color.GRAY
     private  val buttonColorEnabled = Color.parseColor("#EE7002")
 
     companion object {
         private const val REQUEST_ANGLE = 1
-        private const val REQUEST_QR_SCAN = 2
+        private const val REQUEST_HISTORY = 2
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        FirebaseApp.initializeApp(this)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -79,12 +85,6 @@ class MainActivity : AppCompatActivity() {
         initViews()
         calculator = Calculator(expression, result, this)
         setupButtonListeners()
-
-        val qrButton: Button = findViewById(R.id.QrButton)
-        qrButton.setOnClickListener {
-            val intent = Intent(this, QrScannerActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     fun setButtonsEnabled(enabled: Boolean) {
@@ -97,7 +97,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initViews() {
         expression = findViewById(R.id.expression)
-        expression.movementMethod = ScrollingMovementMethod()
         expression.isActivated = true
         expression.isPressed = true
 
@@ -154,8 +153,9 @@ class MainActivity : AppCompatActivity() {
             tg,
             ctg
         )
-
         levelButton = findViewById(R.id.levelButton)
+        historyButton = findViewById(R.id.history)
+        qrButton = findViewById(R.id.QrButton)
     }
 
     private fun setupButtonListeners() {
@@ -193,15 +193,43 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, LevelActivity::class.java)
             startActivityForResult(intent, REQUEST_ANGLE)
         }
+        qrButton.setOnClickListener {
+            val intent = Intent(this, QrScannerActivity::class.java)
+            startActivity(intent)
+        }
+        historyButton.setOnClickListener {
+            val intent = Intent(this, HistoryActivity::class.java)
+            startActivityForResult(intent, REQUEST_HISTORY)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_ANGLE && resultCode == RESULT_OK) {
-            val functionResult = data?.getStringExtra("FUNCTION_RESULT")
-            val expressionText = expression.text.toString()
-            if (functionResult != null) {
-                expression.text = "${expressionText}$functionResult"
+        when (requestCode) {
+            REQUEST_ANGLE -> {
+                if (resultCode == RESULT_OK) {
+                    val functionResult = data?.getStringExtra("FUNCTION_RESULT")
+                    val expressionText = expression.text.toString()
+                    if (functionResult != null) {
+                        if (expressionText == "0")
+                            expression.text = "$functionResult"
+                        else
+                            expression.text = "${expressionText}$functionResult"
+                    }
+                }
+            }
+            REQUEST_HISTORY -> {
+                if (resultCode == RESULT_OK) {
+                    val expressionText = data?.getStringExtra("expression")
+                    val resultText = data?.getStringExtra("result")
+
+                    if (!expressionText.isNullOrEmpty() && !resultText.isNullOrEmpty()) {
+                        expression.text = expressionText
+                        result.text = resultText
+                    } else {
+                        expression.text = "0"
+                    }
+                }
             }
         }
     }
