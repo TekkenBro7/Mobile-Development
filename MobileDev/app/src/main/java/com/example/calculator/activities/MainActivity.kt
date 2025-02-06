@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var levelButton: Button
     private lateinit var historyButton: Button
     private lateinit var qrButton: Button
+    private lateinit var buttonTheme: Button
 
 
     private val buttonColorDisabled = Color.GRAY
@@ -87,6 +88,15 @@ class MainActivity : AppCompatActivity() {
         initViews()
         calculator = Calculator(expression, result, this)
         setupButtonListeners()
+
+
+        buttonTheme = findViewById(R.id.button_theme)
+//        buttonTheme.setOnClickListener {
+//            showThemeSelectionDialog(this) { theme ->
+//                changeTheme(theme)
+//            }
+//        }
+
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (!task.isSuccessful) {

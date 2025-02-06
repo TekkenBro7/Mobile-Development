@@ -50,7 +50,7 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="История"
+            android:text="History"
             android:textAllCaps="false"
             android:backgroundTint="@color/btn"
             android:textColor="@color/white"/>
@@ -70,7 +70,17 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="Уровень"
+            android:text="Level"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/btn"
+            android:textColor="@color/white"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_theme"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="Theme"
             android:textAllCaps="false"
             android:backgroundTint="@color/btn"
             android:textColor="@color/white"/>
