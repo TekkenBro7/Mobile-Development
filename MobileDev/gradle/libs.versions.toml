@@ -1,6 +1,9 @@
 [versions]
 agp = "8.8.0"
 cameraView = "1.4.1"
+firebaseBom = "33.8.0"
+firebaseMessaging = "24.1.0"
+firebaseMessagingDirectboot = "24.1.0"
 kotlin = "2.1.10"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -18,6 +21,7 @@ firebaseFirestoreKtx = "25.1.1"
 firebaseCrashlyticsBuildtools = "3.0.2"
 zxingAndroidEmbedded = "4.3.0"
 firebaseFirestore = "25.1.1"
+workRuntimeKtx = "2.10.0"
 
 [libraries]
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraView" }
@@ -25,6 +29,11 @@ androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "
 androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "cameraView" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraView" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-inappmessaging-display = { module = "com.google.firebase:firebase-inappmessaging-display" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebaseMessaging" }
+firebase-messaging-directboot = { module = "com.google.firebase:firebase-messaging-directboot", version.ref = "firebaseMessagingDirectboot" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -40,6 +49,7 @@ firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-fires
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 zxing-android-embedded = { module = "com.journeyapps:zxing-android-embedded", version.ref = "zxingAndroidEmbedded" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

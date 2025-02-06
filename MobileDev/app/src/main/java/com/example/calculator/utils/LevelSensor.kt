@@ -46,7 +46,6 @@ class LevelSensor(private val context: Context) : SensorEventListener {
         }
 
         updateAccuracyModeTextView()
-
         registerSensors()
 
         val accuracyModeText = when (currentSensorDelay) {

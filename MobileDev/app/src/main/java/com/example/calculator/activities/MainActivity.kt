@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -17,6 +18,7 @@ import com.example.calculator.models.Calculator
 import com.example.calculator.utils.ButtonHandlers
 import com.example.calculator.utils.CalculatorUtils.toggleExtraColumn
 import com.google.firebase.FirebaseApp
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var  expression: TextView
@@ -85,6 +87,23 @@ class MainActivity : AppCompatActivity() {
         initViews()
         calculator = Calculator(expression, result, this)
         setupButtonListeners()
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM", "Ошибка получения токена", task.exception)
+                return@addOnCompleteListener
+            }
+            val token = task.result
+            Log.d("FCM", "Токен устройства: $token")
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic("news")
+            .addOnCompleteListener { task ->
+                var msg = "Подписка успешна"
+                if (!task.isSuccessful) {
+                    msg = "Подписка не удалась"
+                }
+                Log.d("FCM", msg)
+        }
     }
 
     fun setButtonsEnabled(enabled: Boolean) {

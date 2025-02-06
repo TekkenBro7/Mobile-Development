@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.firebase.firestore)
+    implementation(libs.androidx.work.runtime.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -66,6 +67,11 @@ dependencies {
     implementation(libs.zxing.android.embedded)
 
     implementation(platform("com.google.firebase:firebase-bom:33.8.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation ("com.google.firebase:firebase-firestore:25.1.1")
+    // implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation (libs.firebase.firestore)
+    implementation (libs.firebase.messaging)
+    implementation(libs.firebase.inappmessaging.display)
+    implementation (libs.firebase.messaging.directboot)
 }
+
