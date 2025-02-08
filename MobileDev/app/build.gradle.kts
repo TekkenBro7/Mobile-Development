@@ -73,5 +73,9 @@ dependencies {
     implementation (libs.firebase.messaging)
     implementation(libs.firebase.inappmessaging.display)
     implementation (libs.firebase.messaging.directboot)
+
+    implementation ("androidx.security:security-crypto:1.0.0-alpha02")
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.androidx.biometric)
 }
 

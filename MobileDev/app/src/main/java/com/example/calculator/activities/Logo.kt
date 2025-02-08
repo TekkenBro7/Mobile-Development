@@ -26,12 +26,6 @@ class LogoActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         getCurrentThemeFromFirestore()
-
-//        Handler(Looper.getMainLooper()).postDelayed({
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }, 1000)
     }
 
     private fun getCurrentThemeFromFirestore() {
@@ -62,6 +56,7 @@ class LogoActivity : AppCompatActivity() {
         Handler().postDelayed({
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }, SPLASH_TIME_OUT)
     }
 }

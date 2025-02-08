@@ -31,4 +31,9 @@
     <color name="textColorPrimary4">#FFFFFF</color>
     <color name="backgroundColor4">#472C00</color>
 
+    <color name="authBackground">#755531</color>
+    <color name="btnNum">#D5BFA6</color>
+    <color name="btnPin">#5C4033</color>
+
+
 </resources>
