@@ -13,12 +13,20 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.calculator.Firebase.FireStoreManager
+import com.example.calculator.Firebase.applyTheme
+import com.example.calculator.Firebase.loadTheme
+import com.example.calculator.Firebase.saveTheme
 import com.example.calculator.R
 import com.example.calculator.models.Calculator
 import com.example.calculator.utils.ButtonHandlers
 import com.example.calculator.utils.CalculatorUtils.toggleExtraColumn
+import com.example.calculator.utils.showThemeSelectionDialog
 import com.google.firebase.FirebaseApp
 import com.google.firebase.messaging.FirebaseMessaging
+
+const val THEME_PREFERENCES = "ThemePrefs"
+const val SELECTED_THEME = "SelectedTheme"
 
 class MainActivity : AppCompatActivity() {
     private  lateinit var  expression: TextView
@@ -75,27 +83,50 @@ class MainActivity : AppCompatActivity() {
         private const val REQUEST_HISTORY = 2
     }
 
+    val THEME_DEFAULT = 1
+    var currentTheme: Int = THEME_DEFAULT
+    var isThemeLoaded = false
+
+    private lateinit var firestoreManager: FireStoreManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        FirebaseApp.initializeApp(this)
+//        FirebaseApp.initializeApp(this)
+        if (FirebaseApp.getApps(this).isEmpty()) {
+            FirebaseApp.initializeApp(this)
+        }
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        firestoreManager = FireStoreManager(this)
+
         initViews()
         calculator = Calculator(expression, result, this)
         setupButtonListeners()
 
 
+
+
+        if (!isThemeLoaded) {
+            firestoreManager.getCurrentThemeFromFirestore { theme ->
+                changeTheme(theme)
+            }
+            isThemeLoaded = true
+        }
+        currentTheme = loadTheme(this)
+        applyTheme(this, currentTheme)
+
         buttonTheme = findViewById(R.id.button_theme)
-//        buttonTheme.setOnClickListener {
-//            showThemeSelectionDialog(this) { theme ->
-//                changeTheme(theme)
-//            }
-//        }
+        buttonTheme.setOnClickListener {
+            showThemeSelectionDialog(this) { theme ->
+                changeTheme(theme)
+            }
+        }
 
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
@@ -260,6 +291,14 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+    private fun changeTheme(theme: Int) {
+        if (theme != currentTheme) {
+            currentTheme = theme
+            saveTheme(this, theme)
+            firestoreManager.saveCurrentThemeToFirestore(theme)
+            recreate()
         }
     }
 }
